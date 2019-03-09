@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+		<script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script>
+<title>Exploratory Data Analysis (EDA) &#8211; Sooeun&#8217;s blog</title>
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link href='https://fonts.gstatic.com/' crossorigin rel='preconnect' />
+<link rel="alternate" type="application/rss+xml" title="Sooeun&#039;s blog &raquo; Feed" href="/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Sooeun&#039;s blog &raquo; Comments Feed" href="/comments/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11.2.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11.2.0\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/sooeunoh.georgetown.domains\/twittersentiment\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.1"}};
+			!function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55358,56760,9792,65039],[55358,56760,8203,9792,65039]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='wp-block-library-css'  href='/wp-includes/css/dist/block-library/style.min.css?ver=5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-block-library-theme-css'  href='/wp-includes/css/dist/block-library/theme.min.css?ver=5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='twentysixteen-fonts-css'  href='https://fonts.googleapis.com/css?family=Merriweather%3A400%2C700%2C900%2C400italic%2C700italic%2C900italic%7CMontserrat%3A400%2C700%7CInconsolata%3A400&#038;subset=latin%2Clatin-ext' type='text/css' media='all' />
+<link rel='stylesheet' id='genericons-css'  href='/wp-content/themes/twentysixteen/genericons/genericons.css?ver=3.4.1' type='text/css' media='all' />
+<link rel='stylesheet' id='twentysixteen-style-css'  href='/wp-content/themes/twentysixteen/style.css?ver=5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='twentysixteen-block-style-css'  href='/wp-content/themes/twentysixteen/css/blocks.css?ver=20181230' type='text/css' media='all' />
+<!--[if lt IE 10]>
+<link rel='stylesheet' id='twentysixteen-ie-css'  href='http://sooeunoh.georgetown.domains/twittersentiment/wp-content/themes/twentysixteen/css/ie.css?ver=20160816' type='text/css' media='all' />
+<![endif]-->
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentysixteen-ie8-css'  href='http://sooeunoh.georgetown.domains/twittersentiment/wp-content/themes/twentysixteen/css/ie8.css?ver=20160816' type='text/css' media='all' />
+<![endif]-->
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='twentysixteen-ie7-css'  href='http://sooeunoh.georgetown.domains/twittersentiment/wp-content/themes/twentysixteen/css/ie7.css?ver=20160816' type='text/css' media='all' />
+<![endif]-->
+<!--[if lt IE 9]>
+<script type='text/javascript' src='http://sooeunoh.georgetown.domains/twittersentiment/wp-content/themes/twentysixteen/js/html5.js?ver=3.7.3'></script>
+<![endif]-->
+<script type='text/javascript' src='/wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
+<script type='text/javascript' src='/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
+<link rel='https://api.w.org/' href='/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 5.1" />
+<link rel="canonical" href="/home/methods-and-analysis/exploratory-data-analysis/" />
+<link rel='shortlink' href='/?p=18' />
+<link rel="alternate" type="application/json+oembed" href="/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fsooeunoh.georgetown.domains%2Ftwittersentiment%2Fhome%2Fmethods-and-analysis%2Fexploratory-data-analysis%2F" />
+<link rel="alternate" type="text/xml+oembed" href="/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fsooeunoh.georgetown.domains%2Ftwittersentiment%2Fhome%2Fmethods-and-analysis%2Fexploratory-data-analysis%2F&#038;format=xml" />
+		<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+		</head>
+
+<body class="page-template-default page page-id-18 page-child parent-pageid-14 wp-embed-responsive no-sidebar">
+<div id="page" class="site">
+	<div class="site-inner">
+		<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+
+		<header id="masthead" class="site-header" role="banner">
+			<div class="site-header-main">
+				<div class="site-branding">
+					
+											<p class="site-title"><a href="/" rel="home">Sooeun&#8217;s blog</a></p>
+												<p class="site-description">Data Science Projects</p>
+									</div><!-- .site-branding -->
+
+									<button id="menu-toggle" class="menu-toggle">Menu</button>
+
+					<div id="site-header-menu" class="site-header-menu">
+													<nav id="site-navigation" class="main-navigation" role="navigation" aria-label="Primary Menu">
+								<div class="menu-menu-container"><ul id="menu-menu" class="primary-menu"><li id="menu-item-47" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-47"><a href="">Home</a></li>
+<li id="menu-item-48" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-48"><a href="/home/introduction/">Introduction</a></li>
+<li id="menu-item-49" class="menu-item menu-item-type-post_type menu-item-object-page current-page-ancestor current-menu-ancestor current-menu-parent current-page-parent current_page_parent current_page_ancestor menu-item-has-children menu-item-49"><a href="/home/methods-and-analysis/">Methods and Analysis</a>
+<ul class="sub-menu">
+	<li id="menu-item-53" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-53"><a href="/home/methods-and-analysis/data-background/">Data Background</a></li>
+	<li id="menu-item-52" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-52"><a href="/home/methods-and-analysis/sentiment-analysis/">Sentiment Analysis</a></li>
+	<li id="menu-item-54" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-18 current_page_item menu-item-54"><a href="/home/methods-and-analysis/exploratory-data-analysis/" aria-current="page">Exploratory Data Analysis (EDA)</a></li>
+	<li id="menu-item-61" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-61"><a href="/home/methods-and-analysis/visual-analysis/">Visual Analysis</a></li>
+	<li id="menu-item-60" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-60"><a href="/home/methods-and-analysis/correlation-analysis/">Correlation Analysis</a></li>
+	<li id="menu-item-59" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-59"><a href="/home/methods-and-analysis/cluster-analysis/">Cluster Analysis</a></li>
+	<li id="menu-item-58" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-58"><a href="/home/methods-and-analysis/association-analysis/">Association Analysis</a></li>
+	<li id="menu-item-57" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-57"><a href="/home/methods-and-analysis/predictive-analysis/">Predictive Analysis</a></li>
+	<li id="menu-item-56" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-56"><a href="/home/methods-and-analysis/sentiment-analysis/">Sentiment Analysis</a></li>
+	<li id="menu-item-55" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-55"><a href="/home/methods-and-analysis/results/">Results</a></li>
+</ul>
+</li>
+<li id="menu-item-50" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-50"><a href="/home/conclusion/">Conclusion</a></li>
+<li id="menu-item-51" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-51"><a href="/home/meet-the-authors/">Meet the Authors</a></li>
+<li id="menu-item-65" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-65"><a href="/home/reference-materials/">Reference Materials</a></li>
+</ul></div>							</nav><!-- .main-navigation -->
+						
+											</div><!-- .site-header-menu -->
+							</div><!-- .site-header-main -->
+
+					</header><!-- .site-header -->
+
+		<div id="content" class="site-content">
+
+<div id="primary" class="content-area">
+	<main id="main" class="site-main" role="main">
+		
+<article id="post-18" class="post-18 page type-page status-publish hentry">
+	<header class="entry-header">
+		<h1 class="entry-title">Exploratory Data Analysis (EDA)</h1>	</header><!-- .entry-header -->
+
+	
+	<div class="entry-content">
+		<h3>Basic Statistical Analysis</h3>
+<p>As part of the initial exploratory analysis, researchers gathered the summary statistics of the data attributes, including the mean, median, and standard deviation of key numerical attributes and count and mode of key categorical attributes.</p>
+<p><a href="http://kbosshart.georgetown.domains/wp/wp-content/uploads/2017/12/EDA-Summ-Stats-Numerical.jpg"><img class="size-full wp-image-167 aligncenter" src="http://kbosshart.georgetown.domains/wp/wp-content/uploads/2017/12/EDA-Summ-Stats-Numerical.jpg" alt="" width="1433" height="463" /></a></p>
+<p>As shown in the table above, the summary statistics of the State Happiness data attributes, including Rank, Emotional/Physical Well-Being, Community Environment, and Work Environment are identical across Count, Mean, Median, Standard Deviation, Minimum, and Maximum. This is as expected because these fields represent rankings of the United States states, and are valued at 1 to 50 with no repetitions in rankings. The summary statistics as displayed confirm that there are no invalid values in for these fields.</p>
+<p>The summary statistics of the Twitter data attributes, including Followers Count, Friends Count, Retweet Count, Favorite Count and Compound Sentiment, provide additional insight. It is interesting to note that the median Retweet Count and Favorite Count are both zero. On average, our population of tweets have been retweeted about 9 times, and favorited roughly 24 times on average. The attribute Compound Sentiment represents the overall sentiment of a given tweet, with a range in valid values from -1 to 1 &#8211; very close to the range of our sample. The mean and median close to 0 suggests that the majority of the tweets have a neutral sentiment, with a smaller percentage of tweets displaying a strongly negative or strongly positive sentiment.</p>
+<p><a href="http://kbosshart.georgetown.domains/wp/wp-content/uploads/2017/12/EDA-Summ-Stats-Cat.jpg"><img class="aligncenter size-full wp-image-172" src="http://kbosshart.georgetown.domains/wp/wp-content/uploads/2017/12/EDA-Summ-Stats-Cat.jpg" alt="" width="1359" height="404" /></a></p>
+<p>As shown in the table above, the count of our Twitter Data categorical attributes are all identical, and match the counts of the Twitter Data numerical attributes, with the exception of Time Zone. This suggests that the attribute Time Zone contains some missing values, whereas the remaining attributes do not.</p>
+<p>Looking at the Unique Count, a value of 50 is as expected for the State Name attribute, suggesting that tweets are available for all 50 U.S. states. The Tweet Date has a unique count of 11, reflecting that tweets were pulled from Twitter over a span of 11 days. It is interesting to note that the User Name field has a count of 84,377, but a Unique Count of only 57,338. This suggests that 27,039 tweets came from non-unique users.</p>
+<p>The modes of the Categorical attributes provide additional insight. Looking at State Name and Time Zone together, researchers noted that the majority of tweets came from the state of California, yet the most frequent time zone of tweets was Eastern Time. This could potentially be explained by the fact that the Eastern Time zone is made up of a greater number of states, and the majority of the tweets may have come from the collective East coast. Additionally, it is possible that the Californian tweets make up a disproportionate amount of the tweets that did not retain Time Zone information.</p>
+<p>The mode of the User Name is “?” which suggests that many Twitter users may be using emojis or other characters not recognized by Python. As part of the data cleanliness analysis, we investigated the User Identification Numbers to determine whether the majority of tweets came from unique users, for additional information on this analysis, refer to Data Cleaning Insight: Cleaning and Preparing the Twitter Data.</p>
+<h3>Data Cleaning Insight</h3>
+<p>With the potential data issues in consideration, Python3 was leveraged to clean the Happiest States Data and Twitter Data and identify and address outliers. <em>To download a copy of the raw and cleaned datasets, or the related Python programs, refer to the Reference Materials page of this site.</em></p>
+<h6>Cleaning and Preparing the Happiest States Data</h6>
+<p>After a visual assessment was completed on the Happiest States dataset, data quality measures were applied to confirm all fields contained valid values. Those fields containing ranking information, including ‘Rank’, ‘Emotional and Physical Well-Being’, ‘Work Environment’, and ‘Community Environment’ are known to have valid values of only integers between 1 and 50, as they represent ordinal ranks. Similarly, the columns must total to exactly 1,338, as there can be no duplicate ranks for a given attribute. This was confirmed again indirectly through the summary statistics of these attributes. The State attribute was also examined to confirm all values represented valid states, and no duplicates existed. For simplicity and continuity across the Twitter Data, state names in the Happiest State Data with a field length of greater than two characters were converted to the standard two-letter state abbreviation. All attributes within the Happiest States Data were analyzed to confirm no missing values existed.</p>
+<h6>Cleaning and Preparing the Twitter Data</h6>
+<p>After visually assessing the data quality issues within the Twitter Data, we preprocessed the raw tweets to remove noise. To improve capabilities for sentiment analysis, non-textual elements, including URLs, of the raw tweets were considered as noise and removed via use of regular expression matching. Communication between Twitter Users, via use of  &#8220;@username,&#8221; was considered as noise unnecessary to sentiment analysis and systematically removed. Hashtags in the format of #Hashtag, were replaced with the exact same word without the octothorpe, to reduce noise while retaining the intent behind the text. The raw text of all tweets was converted to lowercase. Lastly, question marks were removed to avoid excess noise and confusion with improperly formatted emoticons.</p>
+<p>Once the raw tweets were cleansed, the remaining Twitter Data attributes were cleaned and assessed for quality. The tweet_date attribute was converted into an organized, easy-to-read format, retaining only the month, year, and day of the original value. As the user_description contained many blank values due to Twitter Users not incorporating descriptions within their profiles, all missing values were systematically replaced with the string ‘No Description’.</p>
+<p>For increased accuracy in determining tweet location, the User-reported user_location attribute was deleted in favor of the auto-detected location for state information only. State names were extracted from location_name column. Using the location_type attribute, the formatting of the location_name attribute was identified, allowing for automated extraction of state information. For example, location_type of ‘city’ yields a location_name in the format of ‘San Francisco, CA.’ Roughly 1,500 rows with location_type as ‘poi’, ‘neighborhood, and ‘country’ were dropped since these rows did not contain distinguishable state information, and the relatively low count is not expected to affect overall analysis.</p>
+<p>To create continuity with the Happiest States Data, tweets with invalid locations outside the 50 U.S. states, were considered to be invalid data and removed from the Twitter Data. It was determined that 862 tweets contained a location of Washington, DC. To avoid excessive removal of valid data, the location of these tweets was updated from D.C. to Maryland, due to proximity and the assumption that sentiment is likely to be relatively homogenous across these two locations.</p>
+<p>After implementation of all other cleansing procedures, rows containing multiple bad entries (for example 15 missing values in a single row) were dropped as these may have resulted from a Twitter API server error, or other data collection issues.</p>
+<p>After cleaning, researchers gathered the Top 5 Twitter Users in Twitter Data by Tweet Count (see table below) to help identify any outliers. Considering the U.S. population and the total number of tweets, the highest number of tweets by one user is 41 tweets, as shown in the table below. Because 41 is not excessively high, this indicated that the sample contains tweets from many Twitter Users, rather than an extraordinarily high number of tweets from a small sample of Twitter Users.</p>
+<p><a href="http://kbosshart.georgetown.domains/wp/wp-content/uploads/2017/12/EDA-Top-5-Users-by-Tweet-Count.jpg"><img class="aligncenter wp-image-177" src="http://kbosshart.georgetown.domains/wp/wp-content/uploads/2017/12/EDA-Top-5-Users-by-Tweet-Count.jpg" alt="" width="589" height="349" /></a></p>
+<p>To begin an analysis of the tweet content, the text of each tweet was segmented into tokens, broken out into individual words for further analysis. Then, existing packages within Python were leveraged to assess the sentiment of the text of each of the tweets, assigning a score to each tweet. Using the VADER algorithm, the sentiment of each tweet was assigned into four classes: positive, negative, neutral, and compound, where the positive score represents the sum of the tweet’s positive characteristics, divided by the total, and similarly for the negative and neutral scores. The compound score is an aggregated score of the positive, negative, and neutral scores of an individual tweet [4].</p>
+<h6>Analysis of Data Cleanliness</h6>
+<p>The cleanliness of both the State Happiness and Twitter Data was assessed both before and after cleaning procedures were implemented, through a data quality score. Since the data is comprised of tweets and rankings, the clearest indicator of cleanliness is the number of missing values. The Data Quality Score, below, checks for the missing values of a column and returns a score that represents the level of cleanliness, with 100 being the best and 0 being the worst.</p>
+<p style="text-align: left;"><i>def checkCleanliness(df_col, row_count):</i></p>
+<p style="text-align: left;"><i>    </i><i>score = 100</i></p>
+<p style="text-align: left;"><i>    </i><i>missing_values_counts = df_col.isnull().sum()</i></p>
+<p style="text-align: left;"><i>    </i><i>score = score *(1-missing_values_counts/row_count)</i></p>
+<p>Investigation into the scores of the Twitter Data cleanliness before and after cleansing by attribute (see table below), indicates that all attributes improved in cleanliness, with the exception of time_zone. However, this field is unlikely to negatively impact sentiment analysis.</p>
+<p><a href="http://kbosshart.georgetown.domains/wp/wp-content/uploads/2017/12/EDA-Twitter-Data-Cleanliness.jpg"><img class="aligncenter size-full wp-image-181" src="http://kbosshart.georgetown.domains/wp/wp-content/uploads/2017/12/EDA-Twitter-Data-Cleanliness.jpg" alt="" width="484" height="1056" /></a></p>
+<p>A similar investigation into the scores of the State Happiness Data cleanliness before and after cleansing by attribute (see table below), indicates that all attributes maintained cleanliness, with no issues in missing data.</p>
+<p><a href="http://kbosshart.georgetown.domains/wp/wp-content/uploads/2017/12/EDA-State-Happiness-Data-Cleanliness.jpg"><img class="aligncenter wp-image-184" src="http://kbosshart.georgetown.domains/wp/wp-content/uploads/2017/12/EDA-State-Happiness-Data-Cleanliness.jpg" alt="" width="479" height="261" /></a></p>
+<h6>Binning the Twitter Data</h6>
+<p>As part of the continued preparation of the Twitter data, the compound sentiment score was binned into 5 categories: Very Negative, Little Negative, Neutral, Little Positive, Very Positive, as displayed in the table below,</p>
+<p>&nbsp;</p>
+<table>
+<tbody>
+<tr>
+<td colspan="3"><b>Binning of Compound Sentiment Scores of Twitter Data</b></td>
+</tr>
+<tr>
+<td><b>Bin Label</b></td>
+<td><b>Range of Compound Scores</b></td>
+<td><b>Example Score</b></td>
+</tr>
+<tr>
+<td><span style="font-weight: 400;">Very Negative</span></td>
+<td><span style="font-weight: 400;">-1.0 to -0.5</span></td>
+<td><span style="font-weight: 400;">-0.89</span></td>
+</tr>
+<tr>
+<td><span style="font-weight: 400;">Little Negative</span></td>
+<td><span style="font-weight: 400;">-0.49 to 0</span></td>
+<td><span style="font-weight: 400;">-0.32</span></td>
+</tr>
+<tr>
+<td><span style="font-weight: 400;">Neutral</span></td>
+<td><span style="font-weight: 400;">0</span></td>
+<td><span style="font-weight: 400;">0</span></td>
+</tr>
+<tr>
+<td><span style="font-weight: 400;">Little Positive</span></td>
+<td><span style="font-weight: 400;">0 to 0.49</span></td>
+<td><span style="font-weight: 400;">0.30</span></td>
+</tr>
+<tr>
+<td><span style="font-weight: 400;">Very Positive</span></td>
+<td><span style="font-weight: 400;">0.5 to 1.0</span></td>
+<td><span style="font-weight: 400;">0.92</span></td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Before binning, the compound sentiment score is locally normal between range [-1, 0] and range [0,1] as shown in the left figure above. However, the distribution of the compound scores as a whole is not very normal or smooth. After binning the compound sentiment scores into 5 labels, results are as follows: a compound score of -2 is Very Negative, -1 is Little Negative, 0 is Neutral, 1 is Little Positive, and scores up to 2 are very positive. By binning the attribute, the data is more smooth and normally distributed, as shown in the right histogram above.</p>
+<h6>Histograms of Key Attributes</h6>
+<p>To further investigate the Twitter and State Happiness data and gather additional insight, key attributes were plotted in histograms. Firstly, we investigated the distribution of the Twitter Data sample by state to assist in confirming that the sample of tweets was representative of the true population of the states and help ensure accuracy in analysis results. By plotting histograms of the Number of Tweets by State (see figure below) and comparing to the population of each state (shown below), we investigated whether the sample of tweets was distributed sensibly across all U.S. states, with the number of tweets per state roughly aligning with the population of a given state. To further investigate the sample of tweets, the number of users per state was plotted. Both of these visual analyses suggested that the proportions were roughly aligned and provided confidence that the sample of tweets was representative by state.</p>
+<p><a href="http://kbosshart.georgetown.domains/wp/wp-content/uploads/2017/12/NumberofTweetsbyStates-2.png"><img class="alignnone wp-image-290 size-full" src="http://kbosshart.georgetown.domains/wp/wp-content/uploads/2017/12/NumberofTweetsbyStates-2.png" alt="" width="1002" height="773" /></a><a href="http://kbosshart.georgetown.domains/wp/wp-content/uploads/2017/12/CountofUsersbyState.png"><img class="alignnone wp-image-224 size-full" src="http://kbosshart.georgetown.domains/wp/wp-content/uploads/2017/12/CountofUsersbyState.png" alt="" width="1109" height="771" /></a></p>
+<p><a href="http://kbosshart.georgetown.domains/wp/wp-content/uploads/2017/12/USPopulationbyStates.png"><img class="alignnone wp-image-226 size-full" src="http://kbosshart.georgetown.domains/wp/wp-content/uploads/2017/12/USPopulationbyStates.png" alt="" width="1143" height="772" /></a></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>In reviewing the histograms above, it was determined that the plots of the sample of tweets are all similarly distributed. This suggests that that the sample of tweets being analyzed are representative of the true U.S. population by state in terms of proportion.</p>
+<p>&nbsp;</p>
+<p><a href="http://kbosshart.georgetown.domains/wp/wp-content/uploads/2017/12/HappinessRankingbyStates.png"><img class="alignnone wp-image-227 size-full" src="http://kbosshart.georgetown.domains/wp/wp-content/uploads/2017/12/HappinessRankingbyStates.png" alt="" width="1089" height="770" /></a></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>The rankings of happiness were plotted by state, as illustrated in the figure above. Through visual analysis, it was apparent that there are no obvious outliers in happiness scores, and the range of scores is not excessively high. It appears that most states have relatively similar happiness rankings.</p>
+<p><a href="http://kbosshart.georgetown.domains/wp/wp-content/uploads/2017/12/FreqWords.png"><img class="alignnone wp-image-349" src="http://kbosshart.georgetown.domains/wp/wp-content/uploads/2017/12/FreqWords.png" alt="" width="618" height="355" /></a></p>
+<p>We plotted frequently used words from the raw text of the Twitter data to visually investigate the sentiment. Based on the results, shown above, Twitter users appear to use a mix of words with positive and negative sentiment, with positive words like “love” and “good” appearing frequently. Additional analysis would be required to draw further conclusions on sentiment patterns.</p>
+	</div><!-- .entry-content -->
+
+	
+</article><!-- #post-## -->
+
+	</main><!-- .site-main -->
+
+	
+</div><!-- .content-area -->
+
+
+
+		</div><!-- .site-content -->
+
+		<footer id="colophon" class="site-footer" role="contentinfo">
+							<nav class="main-navigation" role="navigation" aria-label="Footer Primary Menu">
+					<div class="menu-menu-container"><ul id="menu-menu-1" class="primary-menu"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-47"><a href="">Home</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-48"><a href="/home/introduction/">Introduction</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page current-page-ancestor current-menu-ancestor current-menu-parent current-page-parent current_page_parent current_page_ancestor menu-item-has-children menu-item-49"><a href="/home/methods-and-analysis/">Methods and Analysis</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-53"><a href="/home/methods-and-analysis/data-background/">Data Background</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-52"><a href="/home/methods-and-analysis/sentiment-analysis/">Sentiment Analysis</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-18 current_page_item menu-item-54"><a href="/home/methods-and-analysis/exploratory-data-analysis/" aria-current="page">Exploratory Data Analysis (EDA)</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-61"><a href="/home/methods-and-analysis/visual-analysis/">Visual Analysis</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-60"><a href="/home/methods-and-analysis/correlation-analysis/">Correlation Analysis</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-59"><a href="/home/methods-and-analysis/cluster-analysis/">Cluster Analysis</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-58"><a href="/home/methods-and-analysis/association-analysis/">Association Analysis</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-57"><a href="/home/methods-and-analysis/predictive-analysis/">Predictive Analysis</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-56"><a href="/home/methods-and-analysis/sentiment-analysis/">Sentiment Analysis</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-55"><a href="/home/methods-and-analysis/results/">Results</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-50"><a href="/home/conclusion/">Conclusion</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-51"><a href="/home/meet-the-authors/">Meet the Authors</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-65"><a href="/home/reference-materials/">Reference Materials</a></li>
+</ul></div>				</nav><!-- .main-navigation -->
+			
+			
+			<div class="site-info">
+								<span class="site-title"><a href="/" rel="home">Sooeun&#8217;s blog</a></span>
+								<a href="https://wordpress.org/" class="imprint">
+					Proudly powered by WordPress				</a>
+			</div><!-- .site-info -->
+		</footer><!-- .site-footer -->
+	</div><!-- .site-inner -->
+</div><!-- .site -->
+
+<img alt='css.php' src="/wp-content/plugins/cookies-for-comments/css.php?k=5f83e0a32808b123af00e7332681b8f9&amp;o=i&amp;t=1716783179" width='1' height='1' /><script type='text/javascript' src='/wp-content/themes/twentysixteen/js/skip-link-focus-fix.js?ver=20160816'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var screenReaderText = {"expand":"expand child menu","collapse":"collapse child menu"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='/wp-content/themes/twentysixteen/js/functions.js?ver=20181230'></script>
+<script type='text/javascript' src='/wp-includes/js/wp-embed.min.js?ver=5.1'></script>
+</body>
+</html>
